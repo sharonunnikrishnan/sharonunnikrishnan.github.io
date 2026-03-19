@@ -10,15 +10,17 @@
 
     :root {
       --white: #ffffff;
-      --off: #f8f7f5;
-      --light: #f0eeeb;
-      --border: #e2deda;
-      --ink: #1c1917;
-      --ink2: #3c3733;
-      --muted: #78716c;
-      --faint: #a8a29e;
-      --blue: #1d4ed8;
-      --blue-light: #eff6ff;
+      --off: #f4faf6;
+      --light: #e8f5ed;
+      --border: #c9e8d5;
+      --ink: #0f2118;
+      --ink2: #1e3a2a;
+      --muted: #4a7060;
+      --faint: #85b09a;
+      --green: #166534;
+      --green-mid: #16a34a;
+      --green-bright: #22c55e;
+      --green-light: #dcfce7;
       --display: 'Playfair Display', Georgia, serif;
       --body: 'Source Serif 4', Georgia, serif;
       --mono: 'Geist Mono', 'Courier New', monospace;
@@ -47,10 +49,9 @@
     .nav-brand {
       font-family: var(--display);
       font-size: 1.05rem; font-weight: 600;
-      letter-spacing: 0.01em; color: var(--ink);
-      text-decoration: none;
+      color: var(--green); text-decoration: none;
     }
-    .nav-links { display: flex; gap: 0; list-style: none; }
+    .nav-links { display: flex; list-style: none; }
     .nav-links a {
       display: block;
       font-family: var(--mono); font-size: 0.68rem;
@@ -61,7 +62,7 @@
       transition: color 0.2s, background 0.2s;
     }
     .nav-links li:last-child a { border-right: 1px solid var(--border); }
-    .nav-links a:hover { color: var(--blue); background: var(--blue-light); }
+    .nav-links a:hover { color: var(--green); background: var(--green-light); }
 
     /* HERO */
     .hero {
@@ -82,11 +83,11 @@
       display: inline-flex; align-items: center; gap: 0.65rem;
       font-family: var(--mono); font-size: 0.65rem;
       letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--blue); margin-bottom: 2rem;
+      color: var(--green-mid); margin-bottom: 2rem;
     }
     .dot {
       width: 7px; height: 7px; border-radius: 50%;
-      background: var(--blue); animation: blink 2.2s infinite;
+      background: var(--green-bright); animation: blink 2.2s infinite;
     }
     @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
 
@@ -97,14 +98,16 @@
       letter-spacing: -0.025em; color: var(--ink);
       margin-bottom: 0.4rem;
     }
+    h1 .green { color: var(--green-mid); }
     .hero-subtitle {
       font-family: var(--body);
       font-size: 1rem; font-weight: 300; font-style: italic;
       color: var(--muted); margin-bottom: 2.2rem;
     }
     .hero-divider {
-      width: 40px; height: 2px;
-      background: var(--blue); margin-bottom: 2.2rem;
+      width: 40px; height: 3px;
+      background: linear-gradient(90deg, var(--green-bright), var(--green));
+      margin-bottom: 2.2rem; border-radius: 2px;
     }
     .hero-summary {
       font-size: 1rem; line-height: 1.85;
@@ -118,30 +121,30 @@
       font-family: var(--mono); font-size: 0.65rem;
       letter-spacing: 0.05em; color: var(--muted);
     }
-    .meta-item svg { color: var(--blue); flex-shrink: 0; }
+    .meta-item svg { color: var(--green-mid); flex-shrink: 0; }
     .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.8rem 1.8rem;
-      background: var(--blue); color: white;
+      padding: 0.82rem 1.8rem;
+      background: var(--green); color: white;
       font-family: var(--mono); font-size: 0.68rem;
       letter-spacing: 0.1em; text-transform: uppercase;
       text-decoration: none;
-      border: 2px solid var(--blue);
+      border: 2px solid var(--green);
       transition: background 0.2s, transform 0.15s;
     }
-    .btn-primary:hover { background: #1e40af; border-color: #1e40af; transform: translateY(-1px); }
+    .btn-primary:hover { background: #14532d; border-color: #14532d; transform: translateY(-1px); }
     .btn-outline {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.8rem 1.8rem;
-      background: transparent; color: var(--ink);
+      padding: 0.82rem 1.8rem;
+      background: transparent; color: var(--green);
       font-family: var(--mono); font-size: 0.68rem;
       letter-spacing: 0.1em; text-transform: uppercase;
       text-decoration: none;
-      border: 2px solid var(--border);
-      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      border: 2px solid var(--green);
+      transition: background 0.2s, color 0.2s, transform 0.15s;
     }
-    .btn-outline:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+    .btn-outline:hover { background: var(--green-light); transform: translateY(-1px); }
 
     /* PHOTO */
     .hero-photo-col {
@@ -162,7 +165,7 @@
       transition: border-color 0.25s, border-style 0.25s;
       position: relative;
     }
-    .photo-frame:hover { border-color: var(--blue); border-style: solid; }
+    .photo-frame:hover { border-color: var(--green-mid); border-style: solid; }
     .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: none; }
     .photo-frame img.loaded { display: block; }
     .photo-hint {
@@ -182,7 +185,7 @@
     }
     .photo-info span {
       font-family: var(--mono); font-size: 0.6rem;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue);
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-mid);
     }
 
     /* SECTIONS */
@@ -192,11 +195,12 @@
     .section-tag {
       font-family: var(--mono); font-size: 0.62rem;
       letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--blue); margin-bottom: 0.7rem;
+      color: var(--green-mid); margin-bottom: 0.7rem;
       display: flex; align-items: center; gap: 0.8rem;
     }
     .section-tag::before {
-      content: ''; display: block; width: 22px; height: 1px; background: var(--blue);
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--green-bright); border-radius: 1px;
     }
     h2 {
       font-family: var(--display);
@@ -220,10 +224,11 @@
     }
     .section.alt .skill-group { background: var(--off); }
     .skill-group.visible { opacity: 1; transform: translateY(0); }
+    .skill-group:hover { background: var(--green-light); }
     .skill-group-name {
       font-family: var(--mono); font-size: 0.6rem;
       letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--blue); margin-bottom: 1rem;
+      color: var(--green); margin-bottom: 1rem;
       padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
     }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -236,7 +241,6 @@
     .section.alt .skill-tag { background: var(--light); }
 
     /* EXPERIENCE */
-    .timeline { }
     .tl-item {
       display: grid; grid-template-columns: 220px 1fr;
       gap: 3rem; padding: 3rem 0;
@@ -248,7 +252,7 @@
     .tl-item.visible { opacity: 1; transform: translateY(0); }
     .tl-period {
       font-family: var(--mono); font-size: 0.62rem;
-      letter-spacing: 0.08em; color: var(--blue); margin-bottom: 0.4rem;
+      letter-spacing: 0.08em; color: var(--green-mid); margin-bottom: 0.4rem;
     }
     .tl-org {
       font-family: var(--body); font-size: 0.88rem;
@@ -265,7 +269,7 @@
     }
     .tl-bullets li::before {
       content: ''; position: absolute; left: 0; top: 0.72rem;
-      width: 6px; height: 1px; background: var(--blue);
+      width: 6px; height: 2px; background: var(--green-bright); border-radius: 1px;
     }
 
     /* PROJECTS */
@@ -279,10 +283,15 @@
       transition: opacity 0.5s, transform 0.5s, border-color 0.25s, box-shadow 0.25s;
     }
     .project-card.visible { opacity: 1; transform: translateY(0); }
-    .project-card:hover { border-color: var(--blue); box-shadow: 0 4px 24px rgba(29,78,216,0.08); }
+    .project-card:hover {
+      border-color: var(--green-mid);
+      box-shadow: 0 4px 24px rgba(22,163,74,0.1);
+      transform: translateY(-3px);
+    }
     .project-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: var(--blue); transform: scaleX(0); transform-origin: left;
+      background: linear-gradient(90deg, var(--green-bright), var(--green));
+      transform: scaleX(0); transform-origin: left;
       transition: transform 0.3s ease;
     }
     .project-card:hover::before { transform: scaleX(1); }
@@ -298,7 +307,7 @@
     .proj-tech {
       font-family: var(--mono); font-size: 0.6rem;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--blue); margin-bottom: 0.9rem;
+      color: var(--green-mid); margin-bottom: 0.9rem;
     }
     .proj-desc { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
 
@@ -308,10 +317,10 @@
       border: 1px solid var(--border); padding: 2.2rem;
       background: var(--white);
       opacity: 0; transform: translateY(12px);
-      transition: opacity 0.5s, transform 0.5s, box-shadow 0.25s;
+      transition: opacity 0.5s, transform 0.5s, box-shadow 0.25s, border-color 0.25s;
     }
     .edu-card.visible { opacity: 1; transform: translateY(0); }
-    .edu-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .edu-card:hover { border-color: var(--green-mid); box-shadow: 0 4px 16px rgba(22,163,74,0.08); }
     .edu-degree {
       font-family: var(--display); font-size: 1.15rem;
       font-weight: 600; color: var(--ink); margin-bottom: 0.4rem;
@@ -322,7 +331,7 @@
     }
     .edu-year {
       font-family: var(--mono); font-size: 0.62rem;
-      letter-spacing: 0.1em; color: var(--blue);
+      letter-spacing: 0.1em; color: var(--green-mid);
     }
 
     /* CONTACT */
@@ -341,8 +350,8 @@
       text-decoration: none; transition: color 0.2s;
     }
     .contact-link:first-child { border-top: 1px solid var(--border); }
-    .contact-link svg { color: var(--blue); flex-shrink: 0; }
-    .contact-link:hover { color: var(--blue); }
+    .contact-link svg { color: var(--green-mid); flex-shrink: 0; }
+    .contact-link:hover { color: var(--green); }
     .form { display: flex; flex-direction: column; gap: 1.2rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
@@ -356,17 +365,17 @@
       padding: 0.75rem 1rem; outline: none; resize: none;
       transition: border-color 0.2s;
     }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--blue); }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--green-mid); }
     .btn-send {
       display: inline-flex; align-items: center; gap: 0.55rem;
-      padding: 0.8rem 2rem; background: var(--blue); color: white;
+      padding: 0.82rem 2rem; background: var(--green); color: white;
       font-family: var(--mono); font-size: 0.68rem;
       letter-spacing: 0.1em; text-transform: uppercase;
-      border: 2px solid var(--blue); cursor: pointer;
+      border: 2px solid var(--green); cursor: pointer;
       align-self: flex-start; margin-top: 0.4rem;
       transition: background 0.2s, transform 0.15s;
     }
-    .btn-send:hover { background: #1e40af; transform: translateY(-1px); }
+    .btn-send:hover { background: #14532d; transform: translateY(-1px); }
 
     /* FOOTER */
     footer {
@@ -375,8 +384,9 @@
       display: flex; justify-content: space-between; align-items: center;
     }
     footer p { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; }
-    footer a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    footer a { color: var(--green-bright); text-decoration: none; transition: color 0.2s; }
     footer a:hover { color: white; }
+    footer .copy { color: rgba(255,255,255,0.4); }
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -418,7 +428,7 @@
 <div class="hero">
   <div class="hero-content">
     <p class="hero-eyebrow"><span class="dot"></span> Open to opportunities</p>
-    <h1>Sharon<br/>Unnikrishnan</h1>
+    <h1>Sharon<br/><span class="green">Unnikrishnan</span></h1>
     <p class="hero-subtitle">Laravel Backend Engineer &nbsp;·&nbsp; PHP &nbsp;·&nbsp; REST APIs &nbsp;·&nbsp; Payment Integrations</p>
     <div class="hero-divider"></div>
     <p class="hero-summary">Backend engineer with 7+ years of PHP experience and 3 years of Laravel specialisation, building transaction-heavy, API-driven applications in fintech and government domains. Expert in payment gateway integrations, KYC workflows, RBAC, and secure authentication.</p>
@@ -535,7 +545,7 @@
     <p class="section-tag">Professional Experience</p>
     <h2>Career <em>History</em></h2>
   </div>
-  <div class="timeline">
+  <div>
     <div class="tl-item">
       <div>
         <p class="tl-period">Feb 2026 — Present</p>
@@ -673,7 +683,7 @@
       </div>
     </div>
 
-    <!-- <form class="form" onsubmit="handleSubmit(event)">
+    <form class="form" onsubmit="handleSubmit(event)">
       <div class="form-row">
         <div class="form-group">
           <label>Full Name</label>
@@ -696,17 +706,16 @@
         Send Message
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
-    </form> -->
+    </form>
   </div>
 </section>
 
 <footer>
-  <p>© 2025 Sharon Unnikrishnan. All rights reserved.</p>
+  <p class="copy">© 2025 Sharon Unnikrishnan. All rights reserved.</p>
   <p><a href="https://github.com/sharonunnikrishnan" target="_blank">github.com/sharonunnikrishnan</a></p>
 </footer>
 
 <script>
-  // Photo upload
   document.getElementById('photo-input').addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -720,12 +729,10 @@
     reader.readAsDataURL(file);
   });
 
-  // Scroll animations
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const delay = parseInt(entry.target.dataset.delay || 0);
-        setTimeout(() => entry.target.classList.add('visible'), delay);
+        setTimeout(() => entry.target.classList.add('visible'), parseInt(entry.target.dataset.delay || 0));
         io.unobserve(entry.target);
       }
     });
@@ -736,15 +743,13 @@
     io.observe(el);
   });
 
-  // Form submit
   function handleSubmit(e) {
     e.preventDefault();
     const btn = e.target.querySelector('.btn-send');
     const orig = btn.innerHTML;
     btn.textContent = 'Message Sent ✓';
-    btn.style.background = '#15803d';
-    btn.style.borderColor = '#15803d';
-    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.borderColor = ''; e.target.reset(); }, 3500);
+    btn.style.background = '#14532d';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; e.target.reset(); }, 3500);
   }
 </script>
 </body>
