@@ -4,801 +4,733 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sharon Unnikrishnan — Backend Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Geist+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            g: {
+              50:  '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          },
+          backdropBlur: { xs: '2px' },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-slow': 'float 9s ease-in-out infinite',
+            'float-fast': 'float 4s ease-in-out infinite',
+            'pulse-slow': 'pulse 3s ease-in-out infinite',
+            'spin-slow': 'spin 20s linear infinite',
+            'fadeUp': 'fadeUp 0.7s ease forwards',
+          },
+          keyframes: {
+            float: {
+              '0%,100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-18px)' },
+            },
+            fadeUp: {
+              from: { opacity: '0', transform: 'translateY(28px)' },
+              to:   { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --white: #ffffff;
-      --off: #f4faf6;
-      --light: #e8f5ed;
-      --border: #c9e8d5;
-      --ink: #0f2118;
-      --ink2: #1e3a2a;
-      --muted: #4a7060;
-      --faint: #85b09a;
-      --green: #166534;
-      --green-mid: #16a34a;
-      --green-bright: #22c55e;
-      --green-light: #dcfce7;
-      --display: 'Playfair Display', Georgia, serif;
-      --body: 'Source Serif 4', Georgia, serif;
-      --mono: 'Geist Mono', 'Courier New', monospace;
-      --r-sm: 10px;
-      --r-md: 16px;
-      --r-lg: 24px;
-      --r-xl: 32px;
-      --r-pill: 999px;
+    * { box-sizing: border-box; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.35);
     }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--off);
-      color: var(--ink);
-      font-family: var(--body);
-      font-size: 16px;
-      line-height: 1.65;
-      overflow-x: hidden;
+    .glass-dark {
+      background: rgba(20,83,45,0.12);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(134,239,172,0.25);
     }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.75rem 2rem;
-      background: transparent;
+    .glass-card {
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: 0 8px 32px rgba(20,83,45,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
     }
-    .nav-inner {
-      width: 100%;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: var(--r-pill);
-      padding: 0.6rem 0.6rem 0.6rem 1.8rem;
-      box-shadow: 0 2px 16px rgba(22,101,52,0.07);
-    }
-    .nav-brand {
-      font-family: var(--display);
-      font-size: 1rem; font-weight: 600;
-      color: var(--green); text-decoration: none;
-    }
-    .nav-links { display: flex; gap: 0.3rem; list-style: none; }
-    .nav-links a {
-      display: block;
-      font-family: var(--mono); font-size: 0.65rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      text-decoration: none; color: var(--muted);
-      padding: 0.5rem 1rem;
-      border-radius: var(--r-pill);
-      transition: color 0.2s, background 0.2s;
-    }
-    .nav-links a:hover { color: var(--green); background: var(--green-light); }
-
-    /* HERO */
-    .hero {
-      padding: 100px 2rem 2rem;
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 1.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      min-height: 100vh;
-      align-items: center;
-    }
-    .hero-content {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r-xl);
-      padding: 3.5rem;
-      box-shadow: 0 4px 24px rgba(22,101,52,0.06);
-      opacity: 0; transform: translateY(20px);
-      animation: fadeUp 0.7s 0.1s ease forwards;
-    }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.65rem;
-      font-family: var(--mono); font-size: 0.65rem;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--green-mid); margin-bottom: 1.8rem;
-      background: var(--green-light);
-      padding: 0.4rem 1rem;
-      border-radius: var(--r-pill);
-      border: 1px solid var(--border);
-    }
-    .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--green-bright); animation: blink 2.2s infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
-
-    h1 {
-      font-family: var(--display);
-      font-size: clamp(2.6rem, 4.5vw, 4.5rem);
-      font-weight: 700; line-height: 1.04;
-      letter-spacing: -0.025em; color: var(--ink);
-      margin-bottom: 0.4rem;
-    }
-    h1 .green { color: var(--green-mid); }
-    .hero-subtitle {
-      font-family: var(--body);
-      font-size: 0.98rem; font-weight: 300; font-style: italic;
-      color: var(--muted); margin-bottom: 2rem;
-    }
-    .hero-divider {
-      width: 40px; height: 3px;
-      background: linear-gradient(90deg, var(--green-bright), var(--green));
-      margin-bottom: 2rem; border-radius: var(--r-pill);
-    }
-    .hero-summary {
-      font-size: 0.98rem; line-height: 1.85;
-      color: var(--ink2); margin-bottom: 2rem;
-    }
-    .hero-meta {
-      display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 2rem;
-    }
-    .meta-item {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      font-family: var(--mono); font-size: 0.63rem;
-      letter-spacing: 0.05em; color: var(--muted);
-      background: var(--off); border: 1px solid var(--border);
-      padding: 0.38rem 0.85rem; border-radius: var(--r-pill);
-    }
-    .meta-item svg { color: var(--green-mid); flex-shrink: 0; }
-    .hero-actions { display: flex; gap: 0.85rem; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.78rem 1.7rem;
-      background: var(--green); color: white;
-      font-family: var(--mono); font-size: 0.67rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      text-decoration: none;
-      border: 2px solid var(--green);
-      border-radius: var(--r-pill);
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px rgba(22,101,52,0.2);
-    }
-    .btn-primary:hover { background: #14532d; border-color: #14532d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(22,101,52,0.25); }
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.78rem 1.7rem;
-      background: transparent; color: var(--green);
-      font-family: var(--mono); font-size: 0.67rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      text-decoration: none;
-      border: 2px solid var(--green);
-      border-radius: var(--r-pill);
-      transition: background 0.2s, color 0.2s, transform 0.15s;
-    }
-    .btn-outline:hover { background: var(--green-light); transform: translateY(-2px); }
-
-    /* PHOTO */
-    .hero-photo-col {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r-xl);
-      padding: 2.5rem 2rem;
-      box-shadow: 0 4px 24px rgba(22,101,52,0.06);
-      opacity: 0; transform: translateY(20px);
-      animation: fadeUp 0.7s 0.28s ease forwards;
-    }
-    .photo-wrap { width: 100%; max-width: 230px; }
-    .photo-frame {
-      width: 100%; aspect-ratio: 3/4;
-      background: var(--light);
-      border: 2px dashed var(--border);
-      border-radius: var(--r-lg);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      cursor: pointer; overflow: hidden;
-      transition: border-color 0.25s, border-style 0.25s, box-shadow 0.25s;
-      position: relative;
-    }
-    .photo-frame:hover { border-color: var(--green-mid); border-style: solid; box-shadow: 0 4px 20px rgba(22,163,74,0.12); }
-    .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: none; }
-    .photo-frame img.loaded { display: block; }
-    .photo-hint {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 0.8rem; color: var(--faint);
-      pointer-events: none; padding: 1rem; text-align: center;
-    }
-    .photo-hint span {
-      font-family: var(--mono); font-size: 0.6rem;
-      letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.7;
-    }
-    #photo-input { display: none; }
-    .photo-info { margin-top: 1.4rem; text-align: center; }
-    .photo-info strong {
-      display: block; font-family: var(--display);
-      font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem;
-    }
-    .photo-info span {
-      display: inline-block;
-      font-family: var(--mono); font-size: 0.6rem;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-mid);
-      background: var(--green-light); padding: 0.3rem 0.85rem;
-      border-radius: var(--r-pill); border: 1px solid var(--border);
-    }
-
-    /* WRAPPER */
-    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem 2rem; }
-
-    /* SECTIONS */
-    .section {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r-xl);
-      padding: 3.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 16px rgba(22,101,52,0.04);
-    }
-    .section.alt { background: var(--off); }
-    .section-header { margin-bottom: 3rem; }
-    .section-tag {
-      font-family: var(--mono); font-size: 0.62rem;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--green-mid); margin-bottom: 0.7rem;
-      display: inline-flex; align-items: center; gap: 0.7rem;
-      background: var(--green-light);
-      padding: 0.32rem 0.9rem;
-      border-radius: var(--r-pill);
-      border: 1px solid var(--border);
-    }
-    h2 {
-      font-family: var(--display);
-      font-size: clamp(1.7rem, 2.8vw, 2.3rem);
-      font-weight: 600; line-height: 1.15;
-      letter-spacing: -0.01em; color: var(--ink);
-      margin-top: 0.6rem;
-    }
-    h2 em { font-style: italic; font-weight: 400; color: var(--muted); }
-
-    /* SKILLS */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
-    .skill-group {
-      background: var(--off);
-      border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      padding: 1.6rem;
-      opacity: 0; transform: translateY(12px);
-      transition: opacity 0.5s, transform 0.5s, box-shadow 0.25s, border-color 0.25s;
-    }
-    .section.alt .skill-group { background: var(--white); }
-    .skill-group.visible { opacity: 1; transform: translateY(0); }
-    .skill-group:hover { border-color: var(--green-mid); box-shadow: 0 4px 16px rgba(22,163,74,0.1); }
-    .skill-group-name {
-      font-family: var(--mono); font-size: 0.6rem;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--green); margin-bottom: 1rem;
-      padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
-    }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .skill-tag {
-      font-family: var(--mono); font-size: 0.63rem;
-      padding: 0.28rem 0.7rem;
-      background: var(--white); border: 1px solid var(--border);
-      color: var(--ink2); letter-spacing: 0.04em;
-      border-radius: var(--r-pill);
-    }
-    .section.alt .skill-tag { background: var(--off); }
-
-    /* EXPERIENCE */
-    .tl-item {
-      display: grid; grid-template-columns: 210px 1fr;
-      gap: 2.5rem; padding: 2.5rem 0;
-      border-bottom: 1px solid var(--border);
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.55s, transform 0.55s;
-    }
-    .tl-item:first-child { border-top: 1px solid var(--border); }
-    .tl-item.visible { opacity: 1; transform: translateY(0); }
-    .tl-period {
-      display: inline-block;
-      font-family: var(--mono); font-size: 0.62rem;
-      letter-spacing: 0.08em; color: var(--green);
-      background: var(--green-light);
-      padding: 0.28rem 0.8rem;
-      border-radius: var(--r-pill);
-      border: 1px solid var(--border);
-      margin-bottom: 0.6rem;
-    }
-    .tl-org {
-      font-family: var(--body); font-size: 0.88rem;
-      color: var(--muted); font-style: italic;
-    }
-    .tl-role {
-      font-family: var(--display); font-size: 1.12rem;
-      font-weight: 600; color: var(--ink); margin-bottom: 1rem;
-    }
-    .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-    .tl-bullets li {
-      font-size: 0.95rem; color: var(--ink2); line-height: 1.7;
-      padding-left: 1.3rem; position: relative;
-    }
-    .tl-bullets li::before {
-      content: ''; position: absolute; left: 0; top: 0.72rem;
-      width: 6px; height: 2px; background: var(--green-bright); border-radius: var(--r-pill);
-    }
-
-    /* PROJECTS */
-    .projects-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-    }
-    .project-card {
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 2rem;
-      background: var(--off);
-      position: relative; overflow: hidden;
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.5s, transform 0.5s, border-color 0.25s, box-shadow 0.25s;
-    }
-    .project-card.visible { opacity: 1; transform: translateY(0); }
-    .project-card:hover {
-      border-color: var(--green-mid);
-      box-shadow: 0 6px 28px rgba(22,163,74,0.12);
+    .glass-card:hover {
+      background: rgba(255,255,255,0.32);
+      border-color: rgba(34,197,94,0.5);
+      box-shadow: 0 16px 48px rgba(20,83,45,0.14), inset 0 1px 0 rgba(255,255,255,0.7);
       transform: translateY(-4px);
+      transition: all 0.3s ease;
     }
-    .project-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--green-bright), var(--green));
-      border-radius: var(--r-lg) var(--r-lg) 0 0;
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.3s ease;
+    .glass-nav {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 4px 24px rgba(20,83,45,0.1);
     }
-    .project-card:hover::before { transform: scaleX(1); }
-    .proj-index {
-      font-family: var(--mono); font-size: 0.58rem;
-      letter-spacing: 0.2em; color: var(--faint);
-      text-transform: uppercase; margin-bottom: 1rem;
+    .orb {
+      border-radius: 50%;
+      filter: blur(60px);
+      position: absolute;
+      pointer-events: none;
     }
-    .proj-name {
-      font-family: var(--display); font-size: 1.2rem;
-      font-weight: 700; color: var(--ink); margin-bottom: 0.4rem;
+    .skill-pill {
+      background: rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.5);
+      transition: all 0.2s ease;
     }
-    .proj-tech {
-      display: inline-block;
-      font-family: var(--mono); font-size: 0.58rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--green); margin-bottom: 0.9rem;
-      background: var(--green-light); padding: 0.25rem 0.75rem;
-      border-radius: var(--r-pill); border: 1px solid var(--border);
+    .skill-pill:hover {
+      background: rgba(34,197,94,0.2);
+      border-color: rgba(34,197,94,0.5);
     }
-    .proj-desc { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
-
-    /* EDUCATION */
-    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .edu-card {
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 2rem;
-      background: var(--off);
-      opacity: 0; transform: translateY(12px);
-      transition: opacity 0.5s, transform 0.5s, box-shadow 0.25s, border-color 0.25s;
+    .contact-row {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: all 0.2s ease;
     }
-    .edu-card.visible { opacity: 1; transform: translateY(0); }
-    .edu-card:hover { border-color: var(--green-mid); box-shadow: 0 4px 16px rgba(22,163,74,0.1); }
-    .edu-degree {
-      font-family: var(--display); font-size: 1.12rem;
-      font-weight: 600; color: var(--ink); margin-bottom: 0.4rem;
+    .contact-row:hover {
+      background: rgba(34,197,94,0.15);
+      border-color: rgba(34,197,94,0.4);
+      transform: translateX(6px);
     }
-    .edu-uni {
-      font-family: var(--body); font-style: italic;
-      font-size: 0.92rem; color: var(--muted); margin-bottom: 0.6rem;
+    .form-input {
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.45);
+      color: #14532d;
+      transition: all 0.2s ease;
     }
-    .edu-year {
-      display: inline-block;
-      font-family: var(--mono); font-size: 0.62rem;
-      letter-spacing: 0.1em; color: var(--green);
-      background: var(--green-light); padding: 0.25rem 0.75rem;
-      border-radius: var(--r-pill); border: 1px solid var(--border);
+    .form-input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.4);
+      border-color: rgba(34,197,94,0.6);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
     }
-
-    /* CONTACT */
-    .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    .form-input::placeholder { color: rgba(20,83,45,0.4); }
+    .tl-item { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .tl-item.show { opacity: 1; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+    .photo-frame-outer {
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(16px);
+      border: 2px dashed rgba(134,239,172,0.6);
+      transition: all 0.3s ease;
     }
-    .contact-desc {
-      font-size: 0.98rem; color: var(--muted); line-height: 1.85; margin-bottom: 2rem;
+    .photo-frame-outer:hover {
+      border-style: solid;
+      border-color: rgba(34,197,94,0.7);
+      background: rgba(255,255,255,0.3);
     }
-    .contact-list { display: flex; flex-direction: column; gap: 0.6rem; }
-    .contact-link {
-      display: flex; align-items: center; gap: 0.85rem;
-      padding: 0.85rem 1.2rem;
-      background: var(--off); border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      font-family: var(--mono); font-size: 0.67rem;
-      letter-spacing: 0.04em; color: var(--ink2);
-      text-decoration: none; transition: all 0.2s;
-    }
-    .contact-link svg { color: var(--green-mid); flex-shrink: 0; }
-    .contact-link:hover { border-color: var(--green-mid); background: var(--green-light); color: var(--green); box-shadow: 0 2px 10px rgba(22,163,74,0.1); }
-
-    .form { display: flex; flex-direction: column; gap: 1.1rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
-    .form-group label {
-      font-family: var(--mono); font-size: 0.6rem;
-      letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
-    }
-    .form-group input, .form-group textarea {
-      background: var(--off); border: 1px solid var(--border);
-      color: var(--ink); font-family: var(--body); font-size: 0.95rem;
-      padding: 0.75rem 1rem; outline: none; resize: none;
-      border-radius: var(--r-sm);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .form-group input:focus, .form-group textarea:focus {
-      border-color: var(--green-mid);
-      box-shadow: 0 0 0 3px rgba(22,163,74,0.1);
-    }
-    .btn-send {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      padding: 0.8rem 2rem; background: var(--green); color: white;
-      font-family: var(--mono); font-size: 0.67rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      border: 2px solid var(--green); cursor: pointer;
-      align-self: flex-start; margin-top: 0.4rem;
-      border-radius: var(--r-pill);
-      box-shadow: 0 2px 12px rgba(22,101,52,0.2);
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-send:hover { background: #14532d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(22,101,52,0.28); }
-
-    /* FOOTER */
-    footer {
-      background: var(--ink); color: rgba(255,255,255,0.45);
-      padding: 2rem;
-      border-radius: var(--r-xl);
-      margin-bottom: 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    footer p { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; }
-    footer a { color: var(--green-bright); text-decoration: none; transition: color 0.2s; }
-    footer a:hover { color: white; }
-
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-    /* RESPONSIVE */
-    @media (max-width: 1024px) {
-      .hero { grid-template-columns: 1fr; padding-top: 90px; }
-      .skills-grid { grid-template-columns: 1fr 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .contact-grid, .edu-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .section { padding: 2.5rem; }
-      .hero-content { padding: 2.5rem; }
-      footer { flex-direction: column; gap: 0.6rem; text-align: center; }
-    }
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .tl-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      .form-row { grid-template-columns: 1fr; }
-      h1 { font-size: 2.5rem; }
-      .page-wrap { padding: 0 1rem 1rem; }
-      nav { padding: 0.75rem 1rem; }
-    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(34,197,94,0.4); border-radius: 99px; }
   </style>
 </head>
-<body>
+<body class="min-h-screen overflow-x-hidden" style="background: linear-gradient(135deg, #d1fae5 0%, #f0fdf4 30%, #dcfce7 60%, #bbf7d0 100%);">
 
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-brand">Sharon Unnikrishnan</a>
-    <ul class="nav-links">
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#contact">Contact</a></li>
+<!-- ── BACKGROUND ORBS ── -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+  <div class="orb w-96 h-96 bg-green-300 opacity-40 top-[-80px] left-[-60px] animate-float"></div>
+  <div class="orb w-80 h-80 bg-emerald-200 opacity-50 top-1/3 right-[-40px] animate-float-slow"></div>
+  <div class="orb w-72 h-72 bg-green-400 opacity-25 bottom-1/4 left-1/4 animate-float-fast"></div>
+  <div class="orb w-64 h-64 bg-teal-200 opacity-35 bottom-[-40px] right-1/3 animate-float"></div>
+  <div class="orb w-48 h-48 bg-lime-200 opacity-40 top-2/3 left-[-20px] animate-float-slow"></div>
+  <!-- Grid pattern -->
+  <svg class="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+        <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#166534" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+</div>
+
+<!-- ── NAV ── -->
+<nav class="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+  <div class="glass-nav max-w-6xl mx-auto rounded-2xl px-6 py-3 flex justify-between items-center">
+    <span class="font-display font-bold text-g-800 text-lg tracking-tight">Sharon U.</span>
+    <ul class="flex gap-1 list-none">
+      <li><a href="#about" class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 px-3 py-2 rounded-xl hover:bg-g-100 hover:text-g-900 transition-all">About</a></li>
+      <li><a href="#skills" class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 px-3 py-2 rounded-xl hover:bg-g-100 hover:text-g-900 transition-all">Skills</a></li>
+      <li><a href="#experience" class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 px-3 py-2 rounded-xl hover:bg-g-100 hover:text-g-900 transition-all">Experience</a></li>
+      <li><a href="#projects" class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 px-3 py-2 rounded-xl hover:bg-g-100 hover:text-g-900 transition-all">Projects</a></li>
+      <li><a href="#contact" class="font-mono text-[0.62rem] tracking-widest uppercase text-white bg-g-700 px-3 py-2 rounded-xl hover:bg-g-800 transition-all">Contact</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-content">
-    <p class="hero-eyebrow"><span class="dot"></span> Open to opportunities</p>
-    <h1>Sharon<br/><span class="green">Unnikrishnan</span></h1>
-    <p class="hero-subtitle">Laravel Backend Engineer &nbsp;·&nbsp; PHP &nbsp;·&nbsp; REST APIs &nbsp;·&nbsp; Payment Integrations</p>
-    <div class="hero-divider"></div>
-    <p class="hero-summary">Backend engineer with 7+ years of PHP experience and 3 years of Laravel specialisation, building transaction-heavy, API-driven applications in fintech and government domains. Expert in payment gateway integrations, KYC workflows, RBAC, and secure authentication.</p>
-    <div class="hero-meta">
-      <span class="meta-item">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-        Kannur, Kerala, India
-      </span>
-      <span class="meta-item">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        +91 97476 42004
-      </span>
-      <span class="meta-item">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        sharonunnikrishnan11@gmail.com
-      </span>
+<!-- ── HERO ── -->
+<section id="about" class="relative z-10 min-h-screen flex items-center pt-28 pb-16 px-4">
+  <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+
+    <!-- Left -->
+    <div class="opacity-0 animate-fadeUp" style="animation-delay:0.1s;animation-fill-mode:forwards;">
+      <!-- Available badge -->
+      <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6">
+        <span class="w-2 h-2 rounded-full bg-g-500 animate-pulse-slow"></span>
+        <span class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700">Available for opportunities</span>
+      </div>
+
+      <h1 class="font-display text-5xl lg:text-7xl font-bold text-g-900 leading-[1.05] tracking-tight mb-3">
+        Sharon<br/><span class="text-g-600 italic">Unnikrishnan</span>
+      </h1>
+      <p class="font-body text-g-700 text-base font-light mb-6 leading-relaxed">
+        Laravel Backend Engineer &nbsp;·&nbsp; PHP &nbsp;·&nbsp; REST APIs &nbsp;·&nbsp; Payment Integrations
+      </p>
+
+      <div class="w-10 h-1 rounded-full bg-gradient-to-r from-g-400 to-g-700 mb-6"></div>
+
+      <p class="text-g-800 text-[0.97rem] leading-[1.85] mb-8 max-w-lg">
+        Backend engineer with <strong class="font-semibold text-g-900">7+ years of PHP experience</strong> and 3 years of Laravel specialisation, building transaction-heavy, API-driven applications in <strong class="font-semibold text-g-900">fintech and government domains</strong>.
+      </p>
+
+      <!-- Meta pills -->
+      <div class="flex flex-wrap gap-2 mb-8">
+        <span class="glass rounded-full px-3 py-1.5 font-mono text-[0.62rem] tracking-wide text-g-700 flex items-center gap-1.5">
+          <svg class="w-3 h-3 text-g-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Kannur, Kerala, India
+        </span>
+        <span class="glass rounded-full px-3 py-1.5 font-mono text-[0.62rem] tracking-wide text-g-700 flex items-center gap-1.5">
+          <svg class="w-3 h-3 text-g-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          sharonunnikrishnan11@gmail.com
+        </span>
+        <span class="glass rounded-full px-3 py-1.5 font-mono text-[0.62rem] tracking-wide text-g-700 flex items-center gap-1.5">
+          <svg class="w-3 h-3 text-g-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45c.91.35 1.85.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91 97476 42004
+        </span>
+      </div>
+
+      <div class="flex gap-3 flex-wrap">
+        <a href="mailto:sharonunnikrishnan11@gmail.com" class="inline-flex items-center gap-2 bg-g-700 hover:bg-g-800 text-white font-mono text-[0.68rem] tracking-widest uppercase px-5 py-3 rounded-2xl shadow-lg shadow-g-700/30 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-g-700/40">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          Hire Me
+        </a>
+        <a href="https://github.com/sharonunnikrishnan" target="_blank" class="inline-flex items-center gap-2 glass text-g-800 font-mono text-[0.68rem] tracking-widest uppercase px-5 py-3 rounded-2xl hover:bg-white/40 transition-all hover:-translate-y-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
     </div>
-    <div class="hero-actions">
-      <a href="mailto:sharonunnikrishnan11@gmail.com" class="btn-primary">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        Get In Touch
-      </a>
-      <a href="https://github.com/sharonunnikrishnan" target="_blank" class="btn-outline">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        GitHub
-      </a>
+
+    <!-- Right: Photo + floating illustration elements -->
+    <div class="opacity-0 animate-fadeUp relative flex flex-col items-center" style="animation-delay:0.3s;animation-fill-mode:forwards;">
+
+      <!-- Floating code snippet illustration -->
+      <div class="absolute -top-6 -left-4 glass-card rounded-2xl px-4 py-3 animate-float z-20 hidden lg:block">
+        <p class="font-mono text-[0.58rem] text-g-800 leading-relaxed">
+          <span class="text-g-500">$</span> php artisan serve<br/>
+          <span class="text-g-400">→</span> <span class="text-g-700">Server running...</span>
+        </p>
+      </div>
+
+      <!-- Floating API badge -->
+      <div class="absolute -top-2 -right-2 glass-card rounded-2xl px-3 py-2.5 animate-float-slow z-20 flex items-center gap-2 hidden lg:flex">
+        <div class="w-7 h-7 rounded-xl bg-g-500/20 flex items-center justify-center">
+          <svg class="w-4 h-4 text-g-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div>
+          <p class="font-mono text-[0.55rem] text-g-500 uppercase tracking-widest">REST API</p>
+          <p class="font-semibold text-g-800 text-xs">200 OK</p>
+        </div>
+      </div>
+
+      <!-- Photo frame -->
+      <div class="photo-frame-outer w-60 h-80 rounded-3xl flex flex-col items-center justify-center cursor-pointer overflow-hidden relative z-10"
+           onclick="document.getElementById('photo-input').click()">
+        <img id="profile-photo" src="" alt="Sharon" class="w-full h-full object-cover hidden rounded-3xl"/>
+        <div id="photo-hint" class="flex flex-col items-center gap-3 text-g-600 px-4 text-center">
+          <!-- Person illustration -->
+          <svg class="w-20 h-20 opacity-50" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="28" r="14" stroke="#16a34a" stroke-width="2" fill="rgba(34,197,94,0.1)"/>
+            <path d="M12 72c0-15.464 12.536-28 28-28s28 12.536 28 28" stroke="#16a34a" stroke-width="2" stroke-linecap="round" fill="rgba(34,197,94,0.1)"/>
+          </svg>
+          <span class="font-mono text-[0.6rem] tracking-widest uppercase leading-relaxed">Click to upload<br/>your photo</span>
+        </div>
+      </div>
+      <input type="file" id="photo-input" accept="image/*" class="hidden"/>
+
+      <!-- Name badge below photo -->
+      <div class="glass-card rounded-2xl px-5 py-3 mt-4 text-center z-10">
+        <p class="font-display font-semibold text-g-900 text-sm">Sharon Unnikrishnan</p>
+        <p class="font-mono text-[0.6rem] text-g-600 tracking-widest uppercase mt-0.5">Laravel Backend Engineer</p>
+      </div>
+
+      <!-- Floating stat badges -->
+      <div class="absolute bottom-16 -left-6 glass-card rounded-2xl px-3 py-2.5 animate-float-fast z-20 hidden lg:block">
+        <p class="font-mono text-[0.55rem] text-g-500 uppercase tracking-widest">Experience</p>
+        <p class="font-bold text-g-800 text-sm">7+ Years</p>
+      </div>
+      <div class="absolute bottom-8 -right-4 glass-card rounded-2xl px-3 py-2.5 animate-float-slow z-20 hidden lg:block">
+        <p class="font-mono text-[0.55rem] text-g-500 uppercase tracking-widest">Laravel</p>
+        <p class="font-bold text-g-800 text-sm">3 Years</p>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="hero-photo-col">
-    <div class="photo-wrap">
-      <div class="photo-frame" onclick="document.getElementById('photo-input').click()" title="Click to upload your photo">
-        <img id="profile-photo" src="" alt="Sharon Unnikrishnan"/>
-        <div class="photo-hint" id="photo-hint">
-          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          <span>Click to upload<br/>your photo</span>
-        </div>
-      </div>
-      <input type="file" id="photo-input" accept="image/*"/>
-      <div class="photo-info">
-        <strong>Sharon Unnikrishnan</strong>
-        <span>Backend Engineer</span>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- ── SKILLS ── -->
+<section id="skills" class="relative z-10 py-20 px-4">
+  <div class="max-w-6xl mx-auto">
 
-<div class="page-wrap">
-
-  <!-- SKILLS -->
-  <section class="section alt" id="skills">
-    <div class="section-header">
-      <p class="section-tag">Technical Skills</p>
-      <h2>Core <em>Competencies</em></h2>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <p class="skill-group-name">Backend</p>
-        <div class="skill-tags">
-          <span class="skill-tag">PHP</span>
-          <span class="skill-tag">Laravel</span>
-          <span class="skill-tag">CodeIgniter</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <p class="skill-group-name">APIs &amp; Payments</p>
-        <div class="skill-tags">
-          <span class="skill-tag">REST APIs</span>
-          <span class="skill-tag">Webhooks</span>
-          <span class="skill-tag">PayU</span>
-          <span class="skill-tag">Cashfree</span>
-          <span class="skill-tag">Transcorp</span>
-          <span class="skill-tag">Eko</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <p class="skill-group-name">Database</p>
-        <div class="skill-tags">
-          <span class="skill-tag">MySQL</span>
-          <span class="skill-tag">DB2</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <p class="skill-group-name">Frontend</p>
-        <div class="skill-tags">
-          <span class="skill-tag">HTML</span>
-          <span class="skill-tag">CSS</span>
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">React.js (basic)</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <p class="skill-group-name">Practices</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Authentication</span>
-          <span class="skill-tag">RBAC</span>
-          <span class="skill-tag">KYC Workflows</span>
-          <span class="skill-tag">Cron Jobs</span>
-          <span class="skill-tag">Secure Auth</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <p class="skill-group-name">Tools</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">Postman</span>
-          <span class="skill-tag">Linux (basic)</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section class="section" id="experience">
-    <div class="section-header">
-      <p class="section-tag">Professional Experience</p>
-      <h2>Career <em>History</em></h2>
-    </div>
-    <div>
-      <div class="tl-item">
-        <div>
-          <p class="tl-period">Feb 2026 — Present</p>
-          <p class="tl-org">ADSS Private Limited</p>
-        </div>
-        <div>
-          <p class="tl-role">Backend Engineer (Freelance Consultant)</p>
-          <ul class="tl-bullets">
-            <li>Backend consulting &amp; feature enhancements for prepaid card fintech platform.</li>
-            <li>Maintain &amp; optimise PayU, Cashfree, Eko, and Transcorp integrations.</li>
-            <li>Production support, API troubleshooting, and performance improvements.</li>
-            <li>New module development, cron optimisation, and security enhancements.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div>
-          <p class="tl-period">Jan 2023 — Jan 2026</p>
-          <p class="tl-org">ADSS Private Limited</p>
-        </div>
-        <div>
-          <p class="tl-role">Assistant Manager — Backend Development</p>
-          <ul class="tl-bullets">
-            <li>Owned backend of prepaid card fintech platform handling high-volume financial transactions.</li>
-            <li>Integrated PayU, Cashfree, Eko, and Transcorp payments &amp; financial APIs.</li>
-            <li>Built KYC workflows via Laravel REST APIs with secure authentication and RBAC.</li>
-            <li>Developed cron jobs for settlements and reports; managed backend architecture &amp; critical fixes.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div>
-          <p class="tl-period">Jul 2018 — Dec 2021</p>
-          <p class="tl-org">National Informatics Centre</p>
-        </div>
-        <div>
-          <p class="tl-role">Project Engineer (Contract)</p>
-          <ul class="tl-bullets">
-            <li>Developed Treasury Savings Bank system in a government environment.</li>
-            <li>Enhanced accounts, fixed deposits, and interest calculation modules.</li>
-            <li>Resolved production issues and ensured system stability.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div>
-          <p class="tl-period">Apr 2017 — Apr 2018</p>
-          <p class="tl-org">SANS IT Consultancy</p>
-        </div>
-        <div>
-          <p class="tl-role">PHP Developer</p>
-          <ul class="tl-bullets">
-            <li>Built backend modules for HRMS using core PHP.</li>
-            <li>Developed employee data &amp; leave management workflows.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section class="section alt" id="projects">
-    <div class="section-header">
-      <p class="section-tag">Key Projects</p>
-      <h2>Notable <em>Work</em></h2>
-    </div>
-    <div class="projects-grid">
-      <div class="project-card">
-        <p class="proj-index">Project 01</p>
-        <p class="proj-name">MyDop</p>
-        <p class="proj-tech">Laravel · REST APIs · Fintech</p>
-        <p class="proj-desc">Prepaid card platform covering end-to-end KYC onboarding, bill payments, money transfers, and multi-gateway payment integrations including PayU, Cashfree, Eko, and Transcorp.</p>
-      </div>
-      <div class="project-card">
-        <p class="proj-index">Project 02</p>
-        <p class="proj-name">Treasury Savings Bank</p>
-        <p class="proj-tech">PHP · DB2 · Government</p>
-        <p class="proj-desc">Government banking system enhancements — accounts management, fixed deposits, and interest calculation modules built for the National Informatics Centre.</p>
-      </div>
-      <div class="project-card">
-        <p class="proj-index">Project 03</p>
-        <p class="proj-name">HRMS</p>
-        <p class="proj-tech">Core PHP · MySQL</p>
-        <p class="proj-desc">Human Resource Management System with employee data handling and comprehensive leave management workflows built on core PHP with MySQL backend.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section class="section" id="education">
-    <div class="section-header">
-      <p class="section-tag">Education</p>
-      <h2>Academic <em>Background</em></h2>
-    </div>
-    <div class="edu-grid">
-      <div class="edu-card">
-        <p class="edu-degree">Master of Computer Applications</p>
-        <p class="edu-uni">VTU University</p>
-        <p class="edu-year">2015</p>
-      </div>
-      <div class="edu-card">
-        <p class="edu-degree">Bachelor of Computer Applications</p>
-        <p class="edu-uni">Mangalore University</p>
-        <p class="edu-year">2012</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="section alt" id="contact">
-    <div class="contact-grid">
+    <!-- Section header with illustration -->
+    <div class="flex items-end gap-6 mb-12 reveal">
       <div>
-        <div class="section-header" style="margin-bottom:1.8rem;">
-          <p class="section-tag">Contact</p>
-          <h2>Get In <em>Touch</em></h2>
+        <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-600 mb-2 flex items-center gap-2">
+          <span class="w-5 h-0.5 bg-g-400 rounded-full inline-block"></span> Technical Skills
+        </p>
+        <h2 class="font-display text-4xl font-bold text-g-900">Core <em class="font-normal text-g-600">Competencies</em></h2>
+      </div>
+      <!-- Code illustration -->
+      <div class="glass-card rounded-2xl px-4 py-3 hidden md:block ml-auto">
+        <svg viewBox="0 0 120 52" class="w-32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="52" rx="10" fill="rgba(255,255,255,0.3)"/>
+          <circle cx="14" cy="14" r="4" fill="#f87171"/>
+          <circle cx="26" cy="14" r="4" fill="#fbbf24"/>
+          <circle cx="38" cy="14" r="4" fill="#4ade80"/>
+          <rect x="10" y="26" width="40" height="3" rx="1.5" fill="#16a34a" opacity="0.6"/>
+          <rect x="10" y="33" width="60" height="3" rx="1.5" fill="#86efac" opacity="0.5"/>
+          <rect x="10" y="40" width="30" height="3" rx="1.5" fill="#16a34a" opacity="0.4"/>
+          <rect x="56" y="26" width="25" height="3" rx="1.5" fill="#4ade80" opacity="0.5"/>
+          <rect x="76" y="33" width="34" height="3" rx="1.5" fill="#16a34a" opacity="0.3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Backend -->
+      <div class="glass-card rounded-2xl p-5 reveal transition-all duration-300">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-g-600/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-g-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m8 21 4-4 4 4M12 17v4"/></svg>
+          </div>
+          <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 font-medium">Backend</p>
         </div>
-        <p class="contact-desc">Available for freelance projects, full-time backend roles, and fintech consulting. Based in Kannur, Kerala — open to remote opportunities across India and internationally.</p>
-        <div class="contact-list">
-          <a href="mailto:sharonunnikrishnan11@gmail.com" class="contact-link">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">PHP</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Laravel</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">CodeIgniter</span>
+        </div>
+      </div>
+      <!-- APIs & Payments -->
+      <div class="glass-card rounded-2xl p-5 reveal transition-all duration-300">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-g-600/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-g-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 font-medium">APIs &amp; Payments</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">REST APIs</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Webhooks</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">PayU</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Cashfree</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Transcorp</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Eko</span>
+        </div>
+      </div>
+      <!-- Database -->
+      <div class="glass-card rounded-2xl p-5 reveal transition-all duration-300">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-g-600/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-g-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </div>
+          <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 font-medium">Database</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">MySQL</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">DB2</span>
+        </div>
+      </div>
+      <!-- Frontend -->
+      <div class="glass-card rounded-2xl p-5 reveal transition-all duration-300">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-g-600/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-g-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 font-medium">Frontend</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">HTML</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">CSS</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">JavaScript</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">React.js</span>
+        </div>
+      </div>
+      <!-- Practices -->
+      <div class="glass-card rounded-2xl p-5 reveal transition-all duration-300">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-g-600/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-g-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 font-medium">Practices</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Auth</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">RBAC</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">KYC</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Cron Jobs</span>
+        </div>
+      </div>
+      <!-- Tools -->
+      <div class="glass-card rounded-2xl p-5 reveal transition-all duration-300">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-g-600/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-g-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-700 font-medium">Tools</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Git</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Postman</span>
+          <span class="skill-pill rounded-full px-3 py-1 font-mono text-[0.63rem] text-g-800">Linux</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience" class="relative z-10 py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-end gap-6 mb-12 reveal">
+      <div>
+        <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-600 mb-2 flex items-center gap-2">
+          <span class="w-5 h-0.5 bg-g-400 rounded-full inline-block"></span> Professional Experience
+        </p>
+        <h2 class="font-display text-4xl font-bold text-g-900">Career <em class="font-normal text-g-600">History</em></h2>
+      </div>
+      <!-- Timeline illustration -->
+      <div class="glass-card rounded-2xl p-3 hidden md:block ml-auto">
+        <svg viewBox="0 0 100 50" class="w-28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="12" r="5" fill="rgba(34,197,94,0.3)" stroke="#16a34a" stroke-width="1.5"/>
+          <line x1="16" y1="17" x2="16" y2="24" stroke="#86efac" stroke-width="1.5"/>
+          <circle cx="16" cy="29" r="5" fill="rgba(34,197,94,0.2)" stroke="#16a34a" stroke-width="1.5"/>
+          <line x1="16" y1="34" x2="16" y2="41" stroke="#86efac" stroke-width="1.5"/>
+          <circle cx="16" cy="46" r="5" fill="rgba(34,197,94,0.1)" stroke="#86efac" stroke-width="1.5"/>
+          <rect x="28" y="9" width="50" height="6" rx="3" fill="#16a34a" opacity="0.5"/>
+          <rect x="28" y="26" width="38" height="6" rx="3" fill="#16a34a" opacity="0.35"/>
+          <rect x="28" y="43" width="44" height="6" rx="3" fill="#86efac" opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="glass-card rounded-3xl p-6 md:p-8">
+      <!-- Item 1 -->
+      <div class="tl-item flex gap-6 pb-8 border-b border-white/30 mb-8">
+        <div class="flex flex-col items-center gap-1 pt-1 flex-shrink-0">
+          <div class="w-3 h-3 rounded-full bg-g-500 ring-4 ring-g-200/60"></div>
+          <div class="w-0.5 flex-1 bg-gradient-to-b from-g-400/60 to-transparent rounded-full min-h-[60px]"></div>
+        </div>
+        <div class="flex-1">
+          <div class="flex flex-wrap items-start gap-3 mb-3">
+            <div>
+              <p class="font-display text-lg font-semibold text-g-900">Backend Engineer <span class="text-g-600 font-normal italic">(Freelance Consultant)</span></p>
+              <p class="font-mono text-[0.62rem] text-g-600 mt-0.5">ADSS Private Limited</p>
+            </div>
+            <span class="ml-auto glass rounded-full px-3 py-1 font-mono text-[0.58rem] text-g-700 tracking-wide whitespace-nowrap">Feb 2026 — Present</span>
+          </div>
+          <ul class="space-y-2">
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Backend consulting &amp; feature enhancements for prepaid card fintech platform.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Maintain &amp; optimise PayU, Cashfree, Eko, Transcorp integrations.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Production support, API troubleshooting, and performance improvements.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>New module development, cron optimisation, and security enhancements.</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Item 2 -->
+      <div class="tl-item flex gap-6 pb-8 border-b border-white/30 mb-8">
+        <div class="flex flex-col items-center gap-1 pt-1 flex-shrink-0">
+          <div class="w-3 h-3 rounded-full bg-g-500 ring-4 ring-g-200/60"></div>
+          <div class="w-0.5 flex-1 bg-gradient-to-b from-g-400/60 to-transparent rounded-full min-h-[60px]"></div>
+        </div>
+        <div class="flex-1">
+          <div class="flex flex-wrap items-start gap-3 mb-3">
+            <div>
+              <p class="font-display text-lg font-semibold text-g-900">Assistant Manager — Backend Development</p>
+              <p class="font-mono text-[0.62rem] text-g-600 mt-0.5">ADSS Private Limited</p>
+            </div>
+            <span class="ml-auto glass rounded-full px-3 py-1 font-mono text-[0.58rem] text-g-700 tracking-wide whitespace-nowrap">Jan 2023 — Jan 2026</span>
+          </div>
+          <ul class="space-y-2">
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Owned backend of prepaid card fintech platform; high-volume financial transactions.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Integrated PayU, Cashfree, Eko, Transcorp payments &amp; financial APIs.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>KYC workflows via Laravel REST APIs, secure auth, RBAC.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Cron jobs for settlements and reports; backend architecture &amp; critical fixes.</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Item 3 -->
+      <div class="tl-item flex gap-6 pb-8 border-b border-white/30 mb-8">
+        <div class="flex flex-col items-center gap-1 pt-1 flex-shrink-0">
+          <div class="w-3 h-3 rounded-full bg-g-400 ring-4 ring-g-200/60"></div>
+          <div class="w-0.5 flex-1 bg-gradient-to-b from-g-300/60 to-transparent rounded-full min-h-[60px]"></div>
+        </div>
+        <div class="flex-1">
+          <div class="flex flex-wrap items-start gap-3 mb-3">
+            <div>
+              <p class="font-display text-lg font-semibold text-g-900">Project Engineer <span class="text-g-600 font-normal italic">(Contract)</span></p>
+              <p class="font-mono text-[0.62rem] text-g-600 mt-0.5">National Informatics Centre (NIC)</p>
+            </div>
+            <span class="ml-auto glass rounded-full px-3 py-1 font-mono text-[0.58rem] text-g-700 tracking-wide whitespace-nowrap">Jul 2018 — Dec 2021</span>
+          </div>
+          <ul class="space-y-2">
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Treasury Savings Bank system in a government environment.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Enhanced accounts, fixed deposits, interest calculation modules.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Resolved production issues and ensured system stability.</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Item 4 -->
+      <div class="tl-item flex gap-6">
+        <div class="flex flex-col items-center gap-1 pt-1 flex-shrink-0">
+          <div class="w-3 h-3 rounded-full bg-g-300 ring-4 ring-g-200/60"></div>
+        </div>
+        <div class="flex-1">
+          <div class="flex flex-wrap items-start gap-3 mb-3">
+            <div>
+              <p class="font-display text-lg font-semibold text-g-900">PHP Developer</p>
+              <p class="font-mono text-[0.62rem] text-g-600 mt-0.5">SANS IT Consultancy</p>
+            </div>
+            <span class="ml-auto glass rounded-full px-3 py-1 font-mono text-[0.58rem] text-g-700 tracking-wide whitespace-nowrap">Apr 2017 — Apr 2018</span>
+          </div>
+          <ul class="space-y-2">
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Backend modules for HRMS using core PHP.</li>
+            <li class="text-g-800 text-sm flex gap-2"><span class="text-g-400 mt-1 flex-shrink-0">▸</span>Employee data &amp; leave management workflows.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects" class="relative z-10 py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-12 reveal">
+      <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-600 mb-2 flex items-center gap-2">
+        <span class="w-5 h-0.5 bg-g-400 rounded-full inline-block"></span> Key Projects
+      </p>
+      <h2 class="font-display text-4xl font-bold text-g-900">Notable <em class="font-normal text-g-600">Work</em></h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+      <!-- Project 1 -->
+      <div class="glass-card rounded-3xl p-6 relative overflow-hidden reveal transition-all duration-300 group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-g-400 to-g-700 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <!-- Fintech illustration -->
+        <div class="mb-5 flex justify-center">
+          <svg viewBox="0 0 120 80" class="w-32 h-20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="20" width="100" height="60" rx="10" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.3)" stroke-width="1.5"/>
+            <rect x="10" y="20" width="100" height="22" rx="10" fill="rgba(34,197,94,0.2)"/>
+            <rect x="10" y="32" width="100" height="10" fill="rgba(34,197,94,0.15)"/>
+            <rect x="22" y="52" width="30" height="5" rx="2.5" fill="rgba(22,101,52,0.4)"/>
+            <rect x="22" y="62" width="50" height="4" rx="2" fill="rgba(134,239,172,0.5)"/>
+            <circle cx="88" cy="57" r="10" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.5)" stroke-width="1.5"/>
+            <path d="M88 52v10M83 57h10" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="20" y="25" width="35" height="4" rx="2" fill="rgba(255,255,255,0.6)"/>
+          </svg>
+        </div>
+        <p class="font-mono text-[0.55rem] tracking-widest uppercase text-g-500 mb-1">Project 01 · Laravel · Fintech</p>
+        <p class="font-display text-xl font-bold text-g-900 mb-2">MyDop</p>
+        <p class="text-g-700 text-sm leading-relaxed">Prepaid card platform — KYC onboarding, bill payments, money transfers, and multi-gateway payment integrations including PayU, Cashfree, Eko, and Transcorp.</p>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="glass-card rounded-3xl p-6 relative overflow-hidden reveal transition-all duration-300 group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-g-400 to-g-700 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <!-- Bank illustration -->
+        <div class="mb-5 flex justify-center">
+          <svg viewBox="0 0 120 80" class="w-32 h-20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="35" width="90" height="45" rx="4" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.25)" stroke-width="1.5"/>
+            <polygon points="60,8 100,35 20,35" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.4)" stroke-width="1.5"/>
+            <rect x="26" y="42" width="12" height="30" rx="2" fill="rgba(22,101,52,0.3)"/>
+            <rect x="44" y="42" width="12" height="30" rx="2" fill="rgba(22,101,52,0.3)"/>
+            <rect x="62" y="42" width="12" height="30" rx="2" fill="rgba(22,101,52,0.3)"/>
+            <rect x="80" y="42" width="12" height="30" rx="2" fill="rgba(22,101,52,0.3)"/>
+            <rect x="15" y="72" width="90" height="5" rx="2" fill="rgba(34,197,94,0.3)"/>
+            <circle cx="60" cy="22" r="5" fill="rgba(255,255,255,0.5)" stroke="rgba(34,197,94,0.4)" stroke-width="1"/>
+          </svg>
+        </div>
+        <p class="font-mono text-[0.55rem] tracking-widest uppercase text-g-500 mb-1">Project 02 · PHP · Government</p>
+        <p class="font-display text-xl font-bold text-g-900 mb-2">Treasury Savings Bank</p>
+        <p class="text-g-700 text-sm leading-relaxed">Government banking system enhancements — accounts, fixed deposits, and interest calculation modules for the National Informatics Centre.</p>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="glass-card rounded-3xl p-6 relative overflow-hidden reveal transition-all duration-300 group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-g-400 to-g-700 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <!-- HR illustration -->
+        <div class="mb-5 flex justify-center">
+          <svg viewBox="0 0 120 80" class="w-32 h-20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="28" r="12" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.35)" stroke-width="1.5"/>
+            <circle cx="80" cy="28" r="12" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.25)" stroke-width="1.5"/>
+            <path d="M18 72c0-12 10-20 22-20s22 8 22 20" stroke="rgba(34,197,94,0.4)" stroke-width="1.5" stroke-linecap="round" fill="rgba(34,197,94,0.08)"/>
+            <path d="M58 72c0-12 10-20 22-20s22 8 22 20" stroke="rgba(134,239,172,0.5)" stroke-width="1.5" stroke-linecap="round" fill="rgba(34,197,94,0.05)"/>
+            <rect x="48" y="38" width="24" height="18" rx="4" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.4)" stroke-width="1"/>
+            <path d="M54 47h12M54 52h8" stroke="#16a34a" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="font-mono text-[0.55rem] tracking-widest uppercase text-g-500 mb-1">Project 03 · Core PHP · MySQL</p>
+        <p class="font-display text-xl font-bold text-g-900 mb-2">HRMS</p>
+        <p class="text-g-700 text-sm leading-relaxed">Human Resource Management System — employee data handling and leave management workflows built on core PHP with MySQL.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section class="relative z-10 py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-12 reveal">
+      <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-600 mb-2 flex items-center gap-2">
+        <span class="w-5 h-0.5 bg-g-400 rounded-full inline-block"></span> Education
+      </p>
+      <h2 class="font-display text-4xl font-bold text-g-900">Academic <em class="font-normal text-g-600">Background</em></h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="glass-card rounded-3xl p-6 flex gap-5 items-start reveal transition-all duration-300">
+        <!-- Graduation cap illustration -->
+        <div class="w-14 h-14 rounded-2xl bg-g-500/15 flex items-center justify-center flex-shrink-0">
+          <svg class="w-8 h-8 text-g-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div>
+          <p class="font-display text-lg font-semibold text-g-900 mb-1">Master of Computer Applications</p>
+          <p class="font-body text-g-600 italic text-sm mb-2">VTU University</p>
+          <span class="glass rounded-full px-3 py-1 font-mono text-[0.6rem] text-g-700">2015</span>
+        </div>
+      </div>
+      <div class="glass-card rounded-3xl p-6 flex gap-5 items-start reveal transition-all duration-300">
+        <div class="w-14 h-14 rounded-2xl bg-g-500/15 flex items-center justify-center flex-shrink-0">
+          <svg class="w-8 h-8 text-g-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="font-display text-lg font-semibold text-g-900 mb-1">Bachelor of Computer Applications</p>
+          <p class="font-body text-g-600 italic text-sm mb-2">Mangalore University</p>
+          <span class="glass rounded-full px-3 py-1 font-mono text-[0.6rem] text-g-700">2012</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact" class="relative z-10 py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-12 reveal">
+      <p class="font-mono text-[0.62rem] tracking-widest uppercase text-g-600 mb-2 flex items-center gap-2">
+        <span class="w-5 h-0.5 bg-g-400 rounded-full inline-block"></span> Contact
+      </p>
+      <h2 class="font-display text-4xl font-bold text-g-900">Get In <em class="font-normal text-g-600">Touch</em></h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Left: info + illustration -->
+      <div class="reveal">
+        <!-- Envelope illustration -->
+        <div class="glass-card rounded-3xl p-6 mb-6 flex items-center gap-5">
+          <svg viewBox="0 0 80 60" class="w-20 h-16 flex-shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="72" height="48" rx="8" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.3)" stroke-width="1.5"/>
+            <path d="M4 16l36 22 36-22" stroke="rgba(34,197,94,0.5)" stroke-width="1.5"/>
+            <path d="M4 56l26-20M76 56L50 36" stroke="rgba(134,239,172,0.4)" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="62" cy="16" r="10" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.4)" stroke-width="1.2"/>
+            <path d="M58 16h8M62 12v8" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <p class="font-body text-g-800 text-sm leading-relaxed">Available for freelance, full-time roles, and fintech consulting. Based in Kannur, Kerala — open to remote opportunities worldwide.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <a href="mailto:sharonunnikrishnan11@gmail.com" class="contact-row rounded-2xl px-4 py-3.5 flex items-center gap-3 text-g-800 font-mono text-[0.68rem] no-underline">
+            <svg class="w-4 h-4 text-g-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
             sharonunnikrishnan11@gmail.com
           </a>
-          <a href="tel:+919747642004" class="contact-link">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+919747642004" class="contact-row rounded-2xl px-4 py-3.5 flex items-center gap-3 text-g-800 font-mono text-[0.68rem] no-underline">
+            <svg class="w-4 h-4 text-g-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45c.91.35 1.85.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             +91 97476 42004
           </a>
-          <a href="https://github.com/sharonunnikrishnan" target="_blank" class="contact-link">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <a href="https://github.com/sharonunnikrishnan" target="_blank" class="contact-row rounded-2xl px-4 py-3.5 flex items-center gap-3 text-g-800 font-mono text-[0.68rem] no-underline">
+            <svg class="w-4 h-4 text-g-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
             github.com/sharonunnikrishnan
           </a>
-          <span class="contact-link" style="cursor:default;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="contact-row rounded-2xl px-4 py-3.5 flex items-center gap-3 text-g-800 font-mono text-[0.68rem]">
+            <svg class="w-4 h-4 text-g-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
             Kannur, Kerala, India
           </span>
         </div>
       </div>
 
-      <form class="form" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" placeholder="Your name" required/>
+      <!-- Right: form -->
+      <div class="glass-card rounded-3xl p-6 md:p-8 reveal">
+        <form onsubmit="handleSubmit(event)" class="flex flex-col gap-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label class="font-mono text-[0.58rem] tracking-widest uppercase text-g-600">Full Name</label>
+              <input type="text" placeholder="Your name" required class="form-input rounded-xl px-4 py-3 font-body text-sm"/>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label class="font-mono text-[0.58rem] tracking-widest uppercase text-g-600">Email</label>
+              <input type="email" placeholder="your@email.com" required class="form-input rounded-xl px-4 py-3 font-body text-sm"/>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" placeholder="your@email.com" required/>
+          <div class="flex flex-col gap-1.5">
+            <label class="font-mono text-[0.58rem] tracking-widest uppercase text-g-600">Subject</label>
+            <input type="text" placeholder="Job opportunity / Project inquiry" required class="form-input rounded-xl px-4 py-3 font-body text-sm"/>
           </div>
-        </div>
-        <div class="form-group">
-          <label>Subject</label>
-          <input type="text" placeholder="Project inquiry / Job opportunity" required/>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea rows="5" placeholder="Tell me about your project or opportunity…" required></textarea>
-        </div>
-        <button type="submit" class="btn-send">
-          Send Message
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </form>
+          <div class="flex flex-col gap-1.5">
+            <label class="font-mono text-[0.58rem] tracking-widest uppercase text-g-600">Message</label>
+            <textarea rows="5" placeholder="Tell me about your project or opportunity…" required class="form-input rounded-xl px-4 py-3 font-body text-sm resize-none"></textarea>
+          </div>
+          <button type="submit" id="send-btn" class="inline-flex items-center justify-center gap-2 bg-g-700 hover:bg-g-800 text-white font-mono text-[0.68rem] tracking-widest uppercase px-6 py-3.5 rounded-xl shadow-lg shadow-g-700/30 transition-all hover:-translate-y-1 hover:shadow-xl mt-1">
+            Send Message
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 Sharon Unnikrishnan. All rights reserved.</p>
-    <p><a href="https://github.com/sharonunnikrishnan" target="_blank">github.com/sharonunnikrishnan</a></p>
-  </footer>
-
-</div><!-- /page-wrap -->
+<!-- ── FOOTER ── -->
+<footer class="relative z-10 px-4 pb-6">
+  <div class="max-w-6xl mx-auto glass-card rounded-3xl px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+    <p class="font-mono text-[0.62rem] text-g-700 tracking-wide">© 2025 Sharon Unnikrishnan. All rights reserved.</p>
+    <a href="https://github.com/sharonunnikrishnan" target="_blank" class="font-mono text-[0.62rem] text-g-600 hover:text-g-800 transition-colors">github.com/sharonunnikrishnan</a>
+  </div>
+</footer>
 
 <script>
+  // Photo upload
   document.getElementById('photo-input').addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -806,33 +738,40 @@
     reader.onload = ev => {
       const img = document.getElementById('profile-photo');
       img.src = ev.target.result;
-      img.classList.add('loaded');
-      document.getElementById('photo-hint').style.display = 'none';
+      img.classList.remove('hidden');
+      document.getElementById('photo-hint').classList.add('hidden');
     };
     reader.readAsDataURL(file);
   });
 
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), parseInt(entry.target.dataset.delay || 0));
-        io.unobserve(entry.target);
+        setTimeout(() => entry.target.classList.add('show'), (entry.target.dataset.delay || 0));
+        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.skill-group, .tl-item, .project-card, .edu-card').forEach((el, i) => {
-    el.dataset.delay = (i % 3) * 110;
-    io.observe(el);
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 80;
+    observer.observe(el);
   });
 
+  document.querySelectorAll('.tl-item').forEach((el, i) => {
+    el.dataset.delay = i * 120;
+    observer.observe(el);
+  });
+
+  // Form submit
   function handleSubmit(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('.btn-send');
+    const btn = document.getElementById('send-btn');
     const orig = btn.innerHTML;
-    btn.textContent = 'Message Sent ✓';
-    btn.style.background = '#14532d';
-    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; e.target.reset(); }, 3500);
+    btn.innerHTML = 'Message Sent ✓';
+    btn.classList.add('bg-g-900');
+    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('bg-g-900'); e.target.reset(); }, 3500);
   }
 </script>
 </body>
