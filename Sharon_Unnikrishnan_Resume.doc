@@ -1,0 +1,137 @@
+﻿<html><head><meta charset='utf-8'><title>Resume</title></head><body>
+
+        <h1>Sharon Unnikrishnan</h1>
+        <div class="headline">Laravel Backend Developer | PHP | REST APIs | MySQL | Fintech Applications</div>
+
+        <div class="contact">
+            📧 sharonunnikrishnan11@gmail.com |
+            📱 +91 9747642004 |
+            📍 Kannur, Kerala, India<br>
+            🔗 <a href="https://github.com/sharonunnikrishnan">GitHub</a> |
+            <a href="https://www.linkedin.com/in/sharonunnikrishnan">LinkedIn</a> |
+            <a href="https://keravibes.com">Portfolio</a>
+        </div>
+
+        <div>
+            Immediate Joiner | Open to Mid-Level Laravel Backend Developer Opportunities
+        </div>
+
+        <div class="section">
+            <div class="section-title">Professional Summary</div>
+            <p>
+                Laravel Backend Developer with 3+ years of experience developing and maintaining web applications and
+                RESTful APIs using Laravel, PHP, and MySQL. Experienced in payment gateway integrations, role-based
+                access control (RBAC), authentication systems, transaction management, and third-party API integrations.
+
+                Worked on fintech and government-sector applications involving customer management, account operations,
+                financial workflows, and process automation. Proficient in Laravel, PHP, MySQL, Git, Linux, and API
+                development. Currently strengthening expertise in Docker, CI/CD pipelines, AWS cloud services, and
+                deployment automation through continuous learning and personal projects.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Technical Skills</div>
+            <div class="skills-grid">
+                <div><strong>Backend:</strong> Laravel, PHP, CodeIgniter, MVC Architecture, REST APIs</div>
+                <div><strong>Database:</strong> MySQL, DB2, Query Optimization, Database Design</div>
+                <div><strong>Frontend:</strong> HTML5, CSS3, JavaScript, Blade, Livewire, React.js (Basic)</div>
+                <div><strong>API Integration:</strong> REST APIs, Webhooks, PayU, Cashfree, Eko</div>
+                <div><strong>Tools:</strong> Git, GitHub, Postman, Composer, Linux, Cron Jobs</div>
+                <div><strong>DevOps &amp; Cloud:</strong> Docker, GitHub Actions, CI/CD Concepts, AWS (Learning)</div>
+                <div><strong>Practices:</strong> OOP, RBAC, Authentication, Authorization, API Security</div>
+                <div><strong>AI Productivity:</strong> ChatGPT, Claude, Gemini, DeepSeek</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Professional Experience</div>
+
+            <div class="job">
+                <div class="job-title">Professional Development &amp; Technology Transition — Personal Projects (dentivo.in
+                    &amp; keravibes.com)</div>
+                <div class="job-duration">Feb 2026 – Present</div>
+                <ul>
+                    <li>Building Laravel-based web applications to strengthen expertise in modern backend development,
+                        deployment automation, and cloud technologies.</li>
+                    <li>Developed dentivo.in using Laravel and Livewire for healthcare directory management, SEO-focused
+                        landing pages, and appointment enquiry workflows.</li>
+                    <li>Developed keravibes.com as a content publishing platform featuring article management, landing
+                        pages, and digital product delivery capabilities.</li>
+                    <li>Implementing Git-based workflows and source control best practices.</li>
+                    <li>Exploring Docker-based containerized development and CI/CD deployment pipelines.</li>
+                    <li>Learning AWS services including EC2, S3, IAM, and deployment strategies.</li>
+                    <li>Leveraging AI tools for prototyping, debugging, documentation, and productivity improvements.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">Assistant Manager (Backend Developer) — ADSS Pvt Ltd</div>
+                <div class="job-duration">Jan 2023 – Jan 2026</div>
+                <ul>
+                    <li>Developed and maintained Laravel-based backend modules for a prepaid card fintech platform
+                        supporting multiple user roles and financial services.</li>
+                    <li>Integrated PayU, Cashfree, Eko, and Transcorp APIs for transaction processing and wallet
+                        operations.</li>
+                    <li>Implemented KYC verification workflows, RBAC, onboarding, settlement processes, and transaction
+                        tracking.</li>
+                    <li>Developed features for money transfer, bill payments, wallet management, and card services.</li>
+                    <li>Optimized database queries and backend workflows to improve performance and reliability.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">Project Engineer (Contract) — National Informatics Centre (NIC)</div>
+                <div class="job-duration">Jul 2018 – Dec 2021</div>
+                <ul>
+                    <li>Worked on Treasury Savings Bank systems for government banking and account management
+                        operations.</li>
+                    <li>Developed customer creation, account creation, fixed deposit management, and interest
+                        calculation modules.</li>
+                    <li>Maintained backend modules using PHP and DB2 for transaction processing and reporting workflows.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">PHP Developer — SANS IT Consultancy</div>
+                <div class="job-duration">Apr 2017 – Apr 2018</div>
+                <ul>
+                    <li>Developed backend modules for HRMS applications using Core PHP and MySQL.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Core Competencies</div>
+            <ul>
+                <li>Laravel Development • PHP Development • REST API Development</li>
+                <li>Payment Gateway Integration • MySQL Database Design</li>
+                <li>Authentication &amp; Authorization • RBAC</li>
+                <li>Backend System Development • API Integration</li>
+                <li>Git Version Control • Docker Fundamentals</li>
+                <li>CI/CD Concepts • AWS Cloud Fundamentals • Linux Administration</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Key Projects</div>
+            <ul>
+                <li><strong>dentivo.in</strong> – Laravel, Livewire, MySQL, SEO Landing Pages, Clinic Directory.</li>
+                <li><strong>keravibes.com</strong> – Laravel, Content Publishing, Digital Products, Payment Integration.
+                </li>
+                <li><strong>MyDop</strong> – Laravel, PHP, MySQL, REST APIs, PayU, Cashfree, Eko, Wallet Operations.
+                </li>
+                <li><strong>Treasury Savings Bank System</strong> – PHP, DB2, Banking Operations, FD Management.</li>
+                <li><strong>HRMS Application</strong> – Core PHP, MySQL, Employee &amp; Leave Management.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Education</div>
+            <p><strong>Master of Computer Applications (MCA)</strong> — VTU University, 2015</p>
+            <p><strong>Bachelor of Computer Applications (BCA)</strong> — Mangalore University, 2012</p>
+        </div>
+
+    </body></html>
